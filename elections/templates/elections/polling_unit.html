@@ -1,0 +1,35 @@
+{% extends "elections/base.html" %}
+
+{% block content %}
+
+<h2 class="text-center mt-3">Polling Unit Results</h2>
+
+<form method="get" class="mb-3">
+    <div class="card p-3 shadow-sm">
+        {{ form.as_p }}
+        <button class="btn btn-primary">View Results</button>
+    </div>
+</form>
+
+{% if results %}
+<div class="card shadow p-3">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Party</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.party_abbreviation }}</td>
+                <td>{{ r.party_score }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}

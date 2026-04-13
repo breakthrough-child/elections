@@ -1,0 +1,45 @@
+{% extends "elections/base.html" %}
+
+{% block content %}
+
+<h2 class="text-center mt-3">Add Polling Unit Results</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card p-4 shadow-sm">
+
+        <label class="form-label">Select Polling Unit</label>
+        <select name="polling_unit" class="form-select mb-3">
+            {% for pu in polling_units %}
+                <option value="{{ pu.uniqueid }}">
+                    {{ pu.polling_unit_id }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <div class="row">
+            <div class="col">PDP <input class="form-control mb-2" name="PDP"></div>
+            <div class="col">DPP <input class="form-control mb-2" name="DPP"></div>
+            <div class="col">ACN <input class="form-control mb-2" name="ACN"></div>
+        </div>
+
+        <div class="row">
+            <div class="col">PPA <input class="form-control mb-2" name="PPA"></div>
+            <div class="col">CDC <input class="form-control mb-2" name="CDC"></div>
+            <div class="col">JP <input class="form-control mb-2" name="JP"></div>
+        </div>
+
+        <div class="row">
+            <div class="col">ANPP <input class="form-control mb-2" name="ANPP"></div>
+            <div class="col">LABOUR <input class="form-control mb-2" name="LABOUR"></div>
+            <div class="col">CPP <input class="form-control mb-2" name="CPP"></div>
+        </div>
+
+        <button class="btn btn-primary mt-3 w-100">Save Results</button>
+
+    </div>
+
+</form>
+
+{% endblock %}

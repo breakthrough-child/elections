@@ -1,0 +1,25 @@
+{% extends "elections/base.html" %}
+
+{% block content %}
+
+<div class="card shadow p-4 text-center">
+    <h1 class="mb-4">Bincom Election System</h1>
+
+    <p class="text-muted">Built with Django + MySQL</p>
+
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action" href="/polling-unit/">
+            Polling Unit Results
+        </a>
+
+        <a class="list-group-item list-group-item-action" href="/lga-results/">
+            LGA Results
+        </a>
+
+        <a class="list-group-item list-group-item-action" href="/add-results/">
+            Add Results
+        </a>
+    </div>
+</div>
+
+{% endblock %}

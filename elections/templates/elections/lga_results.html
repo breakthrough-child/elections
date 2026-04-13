@@ -1,0 +1,39 @@
+{% extends "elections/base.html" %}
+
+{% block content %}
+
+<h2 class="text-center mt-3">LGA Results (Summed)</h2>
+
+<div class="container mt-4">
+
+<form method="get">
+    <div class="card p-3 shadow-sm mb-3">
+        {{ form.as_p }}
+        <button class="btn btn-success">Calculate</button>
+    </div>
+</form>
+
+{% if results %}
+<div class="card shadow p-3">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Party</th>
+                <th>Total Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in results %}
+            <tr>
+                <td>{{ r.party_abbreviation }}</td>
+                <td>{{ r.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+</div>
+
+{% endblock %}
