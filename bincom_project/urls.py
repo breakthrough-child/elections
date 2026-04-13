@@ -16,8 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from elections import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # HOME PAGE (ROOT URL)
+    path('', views.home, name='home'),
+
+    # APP ROUTES
     path('', include('elections.urls')),
 ]
