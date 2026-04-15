@@ -28,6 +28,10 @@ class AnnouncedPUResult(models.Model):
     party_abbreviation = models.CharField(max_length=10)
     party_score = models.IntegerField()
 
+    entered_by_user = models.CharField(max_length=50)
+    date_entered = models.DateTimeField()
+    user_ip_address = models.CharField(max_length=50)
+
     class Meta:
         db_table = 'announced_pu_results'
         managed = False
