@@ -74,11 +74,11 @@ def add_results(request):
             try:
                 AnnouncedPUResult.objects.create(
                     polling_unit_uniqueid=pu_id,
-                    party_abbreviation=party,
+                    party_abbreviation=str(party).strip().upper()[:10],
                     party_score=int(score),
                     entered_by_user="web",
                     date_entered=timezone.now(),
-                    user_ip_address=(request.META.get('REMOTE_ADDR') or '')[:50]
+                    user_ip_address=(request.META.get('REMOTE_ADDR') or '')[:50],
                 )
             except (ValueError, TypeError):
                 continue
