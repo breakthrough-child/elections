@@ -70,10 +70,7 @@ def add_results(request):
                     AnnouncedPUResult.objects.create(
                         polling_unit_uniqueid=pu_id,
                         party_abbreviation=party,
-                        party_score=int(score),
-                        entered_by_user="web",
-                        date_entered="2011-01-01 00:00:00",
-                        user_ip_address="127.0.0.1"
+                        party_score=int(score)
                     )
                 except ValueError:
                     pass
