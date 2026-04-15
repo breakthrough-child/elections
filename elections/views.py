@@ -63,8 +63,10 @@ def add_results(request):
     if request.method == "POST":
         pu_id = request.POST.get('polling_unit')
 
+        VALID_PARTIES = ['PDP', 'DPP', 'ACN', 'PPA', 'CDC', 'JP', 'ANPP', 'LABOUR', 'CPP']
+
         for party, score in request.POST.items():
-            if party not in ['polling_unit', 'csrfmiddlewaretoken'] and len(party) <= 10:
+            if party in VALID_PARTIES:
                 try:
                     AnnouncedPUResult.objects.create(
                         polling_unit_uniqueid=pu_id,
