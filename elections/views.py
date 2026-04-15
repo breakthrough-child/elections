@@ -65,19 +65,23 @@ def add_results(request):
 
         VALID_PARTIES = ['PDP', 'DPP', 'ACN', 'PPA', 'CDC', 'JP', 'ANPP', 'LABOUR', 'CPP']
 
-        for party, score in request.POST.items():
-            if party in VALID_PARTIES:
-                try:
-                    AnnouncedPUResult.objects.create(
-                        polling_unit_uniqueid=pu_id,
-                        party_abbreviation=party,
-                        party_score=int(score),
-                        entered_by_user="web",
-                        date_entered=timezone.now(),
-                        user_ip_address=request.META.get('REMOTE_ADDR')
-                    )
-                except ValueError:
-                    pass
+        for party in VALID_PARTIES:
+            score = request.POST.get(party)
+
+            if score is None:
+                continue
+
+            try:
+                AnnouncedPUResult.objects.create(
+                    polling_unit_uniqueid=pu_id,
+                    party_abbreviation=party,
+                    party_score=int(score),
+                    entered_by_user="web",
+                    date_entered=timezone.now(),
+                    user_ip_address=(request.META.get('REMOTE_ADDR') or '')[:50]
+                )
+            except (ValueError, TypeError):
+                continue
 
     return render(request, 'elections/add_results.html', {
         'polling_units': polling_units
