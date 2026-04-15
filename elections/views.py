@@ -46,7 +46,7 @@ def lga_results(request):
             polling_unit_uniqueid__in=pu_ids
         ).values('party_abbreviation').annotate(
             total=Sum('party_score')
-        )
+        ).order_by('-total')
 
     return render(request, 'elections/lga_results.html', {
         'form': form,
@@ -73,12 +73,12 @@ def add_results(request):
 
             try:
                 AnnouncedPUResult.objects.create(
-                    polling_unit_uniqueid=pu_id,
+                    polling_unit_uniqueid=int(pu_id),
                     party_abbreviation=str(party).strip().upper()[:10],
                     party_score=int(score),
                     entered_by_user="web",
                     date_entered=timezone.now(),
-                    user_ip_address=(request.META.get('REMOTE_ADDR') or '')[:50],
+                    user_ip_address=(request.META.get('REMOTE_ADDR') or '0.0.0.0')[:50],
                 )
             except (ValueError, TypeError):
                 continue
