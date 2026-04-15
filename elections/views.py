@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.db.models import Sum
 from .models import PollingUnit, AnnouncedPUResult, LGA
 from .forms import PollingUnitForm, LGAForm
-
+from datetime import datetime
 
 
 def home(request):
@@ -70,7 +70,10 @@ def add_results(request):
                     AnnouncedPUResult.objects.create(
                         polling_unit_uniqueid=pu_id,
                         party_abbreviation=party,
-                        party_score=int(score)
+                        party_score=int(score),
+                        entered_by_user="web",
+                        date_entered=datetime.now(),
+                        user_ip_address=request.META.get('REMOTE_ADDR')
                     )
                 except ValueError:
                     pass
