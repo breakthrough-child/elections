@@ -4,8 +4,7 @@ from django.shortcuts import render
 from django.db.models import Sum
 from .models import PollingUnit, AnnouncedPUResult, LGA
 from .forms import PollingUnitForm, LGAForm
-from datetime import datetime
-
+from django.utils import timezone
 
 def home(request):
     return render(request, 'elections/home.html')
@@ -65,14 +64,14 @@ def add_results(request):
         pu_id = request.POST.get('polling_unit')
 
         for party, score in request.POST.items():
-            if party not in ['polling_unit', 'csrfmiddlewaretoken']:
+            if party not in ['polling_unit', 'csrfmiddlewaretoken'] and len(party) <= 10:
                 try:
                     AnnouncedPUResult.objects.create(
                         polling_unit_uniqueid=pu_id,
                         party_abbreviation=party,
                         party_score=int(score),
                         entered_by_user="web",
-                        date_entered=datetime.now(),
+                        date_entered=timezone.now(),
                         user_ip_address=request.META.get('REMOTE_ADDR')
                     )
                 except ValueError:
